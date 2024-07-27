@@ -207,3 +207,53 @@ class LoginView(TokenObtainPairView):
                 {"message": "Invalid credentials"},
                 status=status.HTTP_401_UNAUTHORIZED
             )
+
+
+from django.shortcuts import render
+from django.http import HttpResponse
+from accounts import tasks
+import json
+import pika
+
+# def my_data_view(request):
+
+#     info={
+#         "Students": [
+#             {
+#             "Name": "Tina",
+#             "Age": 17,
+#             "City": "Accra",
+#             "Birthday": "March 24, 2007"
+#             },
+#             {
+#             "Name": "Athrav",
+#             "Age": 18,
+#             "City": "Accra",
+#             "Birthday": "March 24, 2006"
+#             }
+#         ]
+#     }
+#     x= json.dumps(info,indent=2)
+
+    # tasks.publish_message({'hello':'world'})
+    # return HttpResponse(status=201)
+
+    # tasks.publish_message({'hello':x})
+    # return HttpResponse(x, content_type="text/plain")
+
+def send_shop_creation_message(self, user_data):
+        connection = pika.BlockingConnection(pika.ConnectionParameters('localhost'))
+        channel = connection.channel()
+
+        channel.queue_declare(queue='create_shop', durable=True)
+        message = json.dumps({"user_id": user_data['id'], "username": user_data['username']})
+
+        channel.basic_publish(
+            exchange='',
+            routing_key='create_shop',
+            body=message,
+            properties=pika.BasicProperties(
+                delivery_mode=2,  # make message persistent
+            ))
+
+        connection.close()
