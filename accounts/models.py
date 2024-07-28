@@ -2,7 +2,7 @@ from django.contrib.auth.models import AbstractBaseUser, BaseUserManager
 from django.db import models
 
 class CustomUserManager(BaseUserManager):
-    def create_user(self, email, username,role=None, password=None):
+    def create_user(self, email, first_name, last_name, username, role=None, password=None):
         if not email:
             raise ValueError('Users must have an email address')
         if not username:
@@ -10,6 +10,8 @@ class CustomUserManager(BaseUserManager):
 
         user = self.model(
             email=self.normalize_email(email),
+            first_name=first_name,
+            last_name=last_name,
             username=username,
             role=role,
         )
@@ -18,9 +20,11 @@ class CustomUserManager(BaseUserManager):
         user.save(using=self._db)
         return user
 
-    def create_superuser(self, email, username, password=None):
+    def create_superuser(self, email, first_name, last_name,username, password=None):
         user = self.create_user(
             email,
+            first_name=first_name,
+            last_name=last_name,
             username=username,
             password=password,
         )
@@ -34,8 +38,8 @@ class CustomUser(AbstractBaseUser):
         USER = 'user'
         SHOPOWNER = 'shop owner'
     email = models.EmailField(verbose_name='email address', max_length=255, unique=True)
-    first_name = models.CharField(max_length=255, unique=True, default=False)
-    last_name = models.CharField(max_length=255, unique=True, default=False)
+    first_name = models.CharField(max_length=255, default=False)
+    last_name = models.CharField(max_length=255, default=False)
     username = models.CharField(max_length=255, unique=True)
     role = models.CharField(max_length=20,choices=Roles.choices,default=Roles.USER,blank=True,null=True)
     is_active = models.BooleanField(default=True)
