@@ -209,11 +209,11 @@ class LoginView(TokenObtainPairView):
             )
 
 
-from django.shortcuts import render
-from django.http import HttpResponse
-from accounts import tasks
-import json
-import pika
+# from django.shortcuts import render
+# from django.http import HttpResponse
+# from accounts import tasks
+# import json
+# import pika
 
 # def my_data_view(request):
 
@@ -241,19 +241,19 @@ import pika
     # tasks.publish_message({'hello':x})
     # return HttpResponse(x, content_type="text/plain")
 
-def send_shop_creation_message(self, user_data):
-        connection = pika.BlockingConnection(pika.ConnectionParameters('localhost'))
-        channel = connection.channel()
+# def send_shop_creation_message(self, user_data):
+#         connection = pika.BlockingConnection(pika.ConnectionParameters('localhost'))
+#         channel = connection.channel()
 
-        channel.queue_declare(queue='create_shop', durable=True)
-        message = json.dumps({"user_id": user_data['id'], "username": user_data['username']})
+#         channel.queue_declare(queue='create_shop', durable=True)
+#         message = json.dumps({"user_id": user_data['id'], "username": user_data['username']})
 
-        channel.basic_publish(
-            exchange='',
-            routing_key='create_shop',
-            body=message,
-            properties=pika.BasicProperties(
-                delivery_mode=2,  # make message persistent
-            ))
+#         channel.basic_publish(
+#             exchange='',
+#             routing_key='create_shop',
+#             body=message,
+#             properties=pika.BasicProperties(
+#                 delivery_mode=2,  # make message persistent
+#             ))
 
-        connection.close()
+#         connection.close()
