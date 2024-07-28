@@ -45,10 +45,12 @@ INSTALLED_APPS = [
     'rest_framework',
     'rest_framework_simplejwt',
     'drf_yasg',
-    'django_celery_results'
+    'django_celery_results',
+    'corsheaders'
 ]
 
 MIDDLEWARE = [
+    'corsheaders.middleware.CorsMiddleware'
     'django.middleware.security.SecurityMiddleware',
     'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -152,3 +154,6 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 # CELERY_BROKER_URL = 'amqp://guest:guest@localhost//'
 CELERY_BROKER_URL = 'amqps://uuhsqvgz:DCY8ws0rwNIbePCc6yxhUt_aNFA8ueaM@goose.rmq2.cloudamqp.com/uuhsqvgz'
 CELERY_RESULT_BACKEND = 'django-db'
+
+
+CORS_ALLOW_ALL_ORIGINS = True
