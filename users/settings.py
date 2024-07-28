@@ -149,5 +149,6 @@ STATIC_ROOT = BASE_DIR / 'staticfiles'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 #
-CELERY_BROKER_URL = 'amqp://guest:guest@localhost//'
+# CELERY_BROKER_URL = 'amqp://guest:guest@localhost//'
+CELERY_BROKER_URL = 'amqps://uuhsqvgz:DCY8ws0rwNIbePCc6yxhUt_aNFA8ueaM@goose.rmq2.cloudamqp.com/uuhsqvgz'
 CELERY_RESULT_BACKEND = 'django-db'
