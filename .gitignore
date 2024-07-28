@@ -12,8 +12,3 @@ venv/
 # Django
 *.log
 *.sqlite3
-
-receive1.
-
-users/celery.py
-accounts/tasks.py
